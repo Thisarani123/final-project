@@ -2,16 +2,14 @@
 // ignore: implementation_imports
 // ignore_for_file: implementation_imports, prefer_const_constructors
 
-import 'package:detectnew/login_screen.dart';
-import 'package:detectnew/screens/glassmorphism.dart';
-import 'package:detectnew/screens/reusable_widget.dart';
+import 'package:detectnew/detect.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:detectnew/detect.dart';
+import 'package:detectnew/screens/reusable_widget.dart';
 import 'package:detectnew/login_screen.dart';
 import 'package:detectnew/screens/glassmorphism.dart';
-import 'package:detectnew/screens/reusable_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -38,9 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SafeArea(
           child: Column(
             children: <Widget>[
+              // ignore: prefer_const_constructors
               SizedBox(
                 height: 20,
               ),
+
               Text(
                 'S I G N  U P',
                 style: TextStyle(
@@ -49,16 +49,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               SizedBox(
                 height: 70,
               ),
               const Spacer(),
+
               Spacer(),
+
               Center(
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
+                      vertical: 30,
                     ),
                     child: Glassmorphism(
                       blur: 1,
@@ -143,10 +147,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
 
                           signInSignUpButton(context, false, () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => HomeScreen())));
+                            FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: _emailTextController.text,
+                                    password: _passwordTextController.text)
+                                .then((value) {
+                              print("Created new account");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                            }).onError((error, stackTrace) {
+                              print("Error ${error.toString()}");
+                            });
                           }),
                           signOption(),
                         ]),
@@ -179,9 +192,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   MaterialPageRoute(builder: (context) => LoginScreen()));
             },
             child: const Text(
-              "  LOGIN HERE",
+              "LOGIN HERE",
               style: TextStyle(
-                  color: Color.fromARGB(255, 255, 0, 0),
+                  color: Color.fromARGB(255, 196, 10, 47),
                   fontWeight: FontWeight.bold),
             ))
       ],
