@@ -16,17 +16,15 @@ import 'package:detectnew/screens/reusable_widget.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
-
-
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
+
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _usernameTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
