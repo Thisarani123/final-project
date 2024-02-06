@@ -26,6 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _usernameTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
