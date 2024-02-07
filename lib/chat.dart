@@ -33,6 +33,7 @@ class _ChatState extends State<Chat> {
             MaterialPageRoute(builder: (context) => friutinfo()),
           );
         },
+        
         child: Scaffold(
           appBar: AppBar(
             title: null, // Set title to null to remove AMBOT text
