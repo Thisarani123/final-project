@@ -1,16 +1,11 @@
 import 'dart:io';
-import 'package:detectnew/WelcomePage.dart';
 import 'package:detectnew/chat.dart';
-import 'package:detectnew/fruitinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:detectnew/login_screen.dart';
-import 'package:detectnew/detect.dart';
-import 'package:detectnew/main.dart';
-import 'package:flutter/widgets.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String selectedImagePath = '';
   String detectedDisease = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -302,6 +298,11 @@ class _HomeScreenState extends State<HomeScreen> {
         detectedDisease = result;
       });
 
+      // Upload image to Firebase Storage
+      String imageUrl = await uploadToFirebaseStorage(selectedImagePath);
+
+     
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -329,7 +330,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<String> detectDiseaseUsingFirebase(String imagePath) async {
-    return 'banana_sigatoka';
+    // Replace this with your disease detection logic
+    // Example: Call a machine learning model to classify the image
+    // For simplicity, let's assume we have a function that returns the detected disease based on the image path
+    String detectedDisease = await classifyImage(imagePath);
+    return detectedDisease;
+  }
+
+  Future<String> classifyImage(String imagePath) async {
+    // Perform image classification using a pre-trained model
+    // You can replace this with your actual model inference code
+    // For demonstration purposes, let's assume a simple logic to detect the disease based on the file name
+    String fileName = imagePath.split('/').last;
+    if (fileName.toLowerCase().contains('banana_sigatoka')) {
+      return 'Banana Sigatoka';
+    } else if (fileName.toLowerCase().contains('banana_xanthomonas')) {
+      return 'Banana Xanthomonas';
+    } else {
+      return 'Healthy Banana';
+    }
   }
 
   Future<String> selectImageFromGallery() async {
@@ -351,4 +370,28 @@ class _HomeScreenState extends State<HomeScreen> {
       return '';
     }
   }
-}
+
+  Future<String> uploadToFirebaseStorage(String imagePath) async {
+    try {
+      File imageFile = File(imagePath);
+
+      // Upload image to Firebase Storage
+      Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
+      UploadTask uploadTask = storageReference.putFile(imageFile);
+      await uploadTask.whenComplete(() => null);
+
+      // Get the image URL from Firebase Storage
+      String imageUrl = await storageReference.getDownloadURL();
+
+      return imageUrl;
+    } catch (error) {
+      print('Error uploading image to Firebase Storage: $error');
+      return '';
+    }
+  }
+
+ 
+  }
+
