@@ -15,7 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String selectedImagePath = '';
   String detectedDisease = '';
 
-
   @override
   Widget build(BuildContext context) {
     double baseWidth = 414;
@@ -301,8 +300,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // Upload image to Firebase Storage
       String imageUrl = await uploadToFirebaseStorage(selectedImagePath);
 
-     
-
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -391,7 +388,4 @@ class _HomeScreenState extends State<HomeScreen> {
       return '';
     }
   }
-
- 
-  }
-
+}
