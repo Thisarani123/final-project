@@ -20,6 +20,7 @@ class appledetails extends StatelessWidget {
           MaterialPageRoute(builder: (context) => profilesetting()),
         );
       },
+      
       child: Container(
         width: double.infinity,
         child: Container(
