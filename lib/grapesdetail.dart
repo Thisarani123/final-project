@@ -1,0 +1,136 @@
+import 'package:detectnew/detect.dart';
+import 'package:detectnew/profile_setting.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'dart:ui';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:detectnew/utils.dart';
+
+class grapesdetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double baseWidth = 414;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
+    return SingleChildScrollView(
+        child: GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => profilesetting()),
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        child: Container(
+          // iphone11promax9Dd6 (115:2)
+          padding:
+              EdgeInsets.fromLTRB(20 * fem, 128 * fem, 16 * fem, 100 * fem),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(color: Color(0xff000000)),
+            color: Color(0xffffffff),
+            borderRadius: BorderRadius.circular(25 * fem),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                'assets/images/grapesdetail.jpg',
+              ),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x3f000000),
+                offset: Offset(0 * fem, 4 * fem),
+                blurRadius: 2 * fem,
+              ),
+            ],
+          ),
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaX: 0 * fem,
+              sigmaY: 0 * fem,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  // cweatherTJU (115:5)
+                  margin:
+                      EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 362 * fem),
+                  child: RichText(
+                    text: TextSpan(
+                      style: SafeGoogleFont(
+                        'Inter',
+                        fontSize: 32 * ffem,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2102272511 * ffem / fem,
+                        color: Color(0xffffffff),
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '25°C-32°C    ',
+                          style: SafeGoogleFont(
+                            'Inter',
+                            fontSize: 32 * ffem,
+                            fontWeight: FontWeight.w800,
+                            height: 1.2125 * ffem / fem,
+                            color: Color.fromARGB(255, 237, 237, 238),
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Weather',
+                          style: SafeGoogleFont(
+                            'Inter',
+                            fontSize: 25 * ffem,
+                            fontWeight: FontWeight.w800,
+                            height: 1.2125 * ffem / fem,
+                            color: Color.fromARGB(255, 133, 217, 232),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  // appleapplemalusdomesticadomest (115:4)
+                  margin:
+                      EdgeInsets.fromLTRB(16 * fem, 0 * fem, 0 * fem, 0 * fem),
+                  constraints: BoxConstraints(
+                    maxWidth: 362 * fem,
+                  ),
+                  child: RichText(
+                    text: TextSpan(
+                      style: SafeGoogleFont(
+                        'Inter',
+                        fontSize: 20 * ffem,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2125 * ffem / fem,
+                        color: Color.fromARGB(255, 250, 251, 252),
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'GRAPES\n\n\n',
+                          style: SafeGoogleFont(
+                            'Inter',
+                            fontSize: 20 * ffem,
+                            fontWeight: FontWeight.w800,
+                            height: 0.6 * ffem / fem,
+                            color: Color(0xffffffff),
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              'The grape is usually a woody vine, climbing by means of tendrils (modified branches) and when untrained often reaching a length of 17 metres (56 feet) or more. In arid regions it may form an almost erect shrub. The edible leaves are alternate, palmately lobed, and always tooth-edged. A grape is a fruit, botanically a berry, of genus Vitis and family Vitaceae.',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ));
+  }
+}
