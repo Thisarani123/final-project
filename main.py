@@ -26,10 +26,10 @@ def preprocess_image(image_path):
 def display_disease(detected_disease):
     print(f"The detected disease is: {detected_disease}")
 
-# Function to open a file dialog and select an image
+
 def select_image():
     root = Tk()
-    root.withdraw()  # Hide the main window
+    root.withdraw()  
     file_path = filedialog.askopenfilename(title="Select Image", filetypes=(("Image files", "*.jpg;*.jpeg;*.png"), ("All files", "*.*")))
     root.destroy()
     return file_path
