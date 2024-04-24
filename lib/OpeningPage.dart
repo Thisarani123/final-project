@@ -60,8 +60,8 @@ class _OpeningPageState extends State<OpeningPage> {
         child: Align(
           alignment: Alignment.center,
           child: Container(
-            width: 180,
-            height: 180,
+            width: 1500,
+            height: 1500,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
                 // ignore: prefer_const_constructors
@@ -77,7 +77,9 @@ class _OpeningPageState extends State<OpeningPage> {
         ),
       ),
     );
+    
 
     // ignore: unused_label, dead_code
   }
+
 }
