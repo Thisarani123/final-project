@@ -7,3 +7,4 @@ class AppColors {
   static const Color whiteColor = Color.fromARGB(255, 55, 84, 181);
   static const Color lightColor = Color.fromARGB(255, 158, 205, 247);
 }
+
