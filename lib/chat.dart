@@ -33,7 +33,6 @@ class _ChatState extends State<Chat> {
             MaterialPageRoute(builder: (context) => friutinfo()),
           );
         },
-        
         child: Scaffold(
           appBar: AppBar(
             title: null, // Set title to null to remove AMBOT text
@@ -41,6 +40,7 @@ class _ChatState extends State<Chat> {
           ),
           body: Container(
             width: double.infinity,
+            height: 750,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -52,8 +52,8 @@ class _ChatState extends State<Chat> {
                 begin: Alignment(0, -1),
                 end: Alignment(0, 1),
                 colors: <Color>[
-                  Color.fromARGB(224, 11, 131, 6),
-                  Color.fromARGB(19, 1, 4, 1),
+                  Color.fromARGB(223, 15, 187, 9),
+                  Color.fromARGB(19, 128, 142, 128),
                 ],
                 stops: <double>[0, 1],
               ),
@@ -63,7 +63,7 @@ class _ChatState extends State<Chat> {
                 Expanded(child: MessagesScreen(messages: messages)),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  color: Colors.deepPurple,
+                  color: Color.fromARGB(255, 105, 172, 231),
                   child: Row(
                     children: [
                       Expanded(
@@ -132,16 +132,16 @@ class Scene extends StatelessWidget {
               ),
             ),
             width: 420 * fem,
-            height: 160 * fem,
+            height: 150 * fem,
             child: Stack(
               children: [
                 Positioned(
-                  left: 87 * fem,
-                  top: 0 * fem,
+                  left: 70 * fem,
+                  top: 0.08,
                   child: Align(
                     child: SizedBox(
-                      width: 104 * fem,
-                      height: 114 * fem,
+                      width: 95 * fem,
+                      height: 100 * fem,
                       child: Image.asset(
                         'assets/images/chatbot.png',
                         fit: BoxFit.cover,
@@ -150,8 +150,8 @@ class Scene extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: 196 * fem,
-                  top: 28 * fem,
+                  left: 215 * fem,
+                  top: 10 * fem,
                   child: Align(
                     child: SizedBox(
                       width: 98 * fem,
@@ -159,18 +159,18 @@ class Scene extends StatelessWidget {
                       child: Text(
                         'Chatbot',
                         style: TextStyle(
-                          fontSize: 24 * ffem,
+                          fontSize: 24.5 * ffem,
                           fontWeight: FontWeight.w800,
                           height: 1.9 * ffem / fem,
-                          color: Color.fromARGB(255, 175, 173, 198),
+                          color: Color.fromARGB(255, 249, 249, 251),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 108 * fem,
-                  top: 75 * fem,
+                  left: 165 * fem,
+                  top: 40 * fem,
                   child: Align(
                     child: SizedBox(
                       width: 235 * fem,
@@ -179,7 +179,7 @@ class Scene extends StatelessWidget {
                         'How can I help you?',
                         style: TextStyle(
                           fontSize: 24 * ffem,
-                          color: Color.fromARGB(184, 230, 101, 215),
+                          color: Color.fromARGB(255, 5, 4, 4),
                           fontWeight: FontWeight.w800,
                           height: 2 * ffem / fem,
                         ),
