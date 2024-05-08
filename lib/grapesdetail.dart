@@ -74,7 +74,7 @@ class grapesdetails extends StatelessWidget {
                             fontSize: 32 * ffem,
                             fontWeight: FontWeight.w800,
                             height: 1.2125 * ffem / fem,
-                            color: Color.fromARGB(255, 237, 237, 238),
+                            color: Color.fromARGB(255, 25, 25, 218),
                           ),
                         ),
                         TextSpan(
@@ -84,7 +84,7 @@ class grapesdetails extends StatelessWidget {
                             fontSize: 25 * ffem,
                             fontWeight: FontWeight.w800,
                             height: 1.2125 * ffem / fem,
-                            color: Color.fromARGB(255, 133, 217, 232),
+                            color: Color.fromARGB(255, 252, 252, 253),
                           ),
                         ),
                       ],
@@ -105,7 +105,7 @@ class grapesdetails extends StatelessWidget {
                         fontSize: 20 * ffem,
                         fontWeight: FontWeight.w700,
                         height: 1.2125 * ffem / fem,
-                        color: Color.fromARGB(255, 250, 251, 252),
+                        color: Color.fromARGB(255, 247, 246, 248),
                       ),
                       children: [
                         TextSpan(
@@ -115,7 +115,7 @@ class grapesdetails extends StatelessWidget {
                             fontSize: 20 * ffem,
                             fontWeight: FontWeight.w800,
                             height: 0.6 * ffem / fem,
-                            color: Color(0xffffffff),
+                            color: Color.fromARGB(255, 248, 248, 242),
                           ),
                         ),
                         TextSpan(
