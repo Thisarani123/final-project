@@ -2,6 +2,8 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, sized_box_for_whitespace, unnecessary_import, implementation_imports, depend_on_referenced_packages, unused_import
 
 import 'dart:io';
+import 'package:detectnew/sidebar.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:detectnew/app_colors.dart';
 import 'package:detectnew/green_intro_widget.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: camel_case_types
 class profilesetting extends StatefulWidget {
@@ -35,9 +38,106 @@ class _profilesettingState extends State<profilesetting> {
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
 
-  getImage(ImageSource source) async {
-    XFile? image = await _picker.pickImage(source: source);
+    void getImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        selectedImage = File(pickedFile.path);
+        // You can then upload the selected image to Firestore or any other storage
+      } else {
+        print('No image selected.');
+      }
+    });
   }
+
+   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  void uploadUserData() async {
+  try {
+    // Upload image to Firebase Storage
+    if (selectedImage != null) {
+      String imageUrl = await uploadImageToStorage(selectedImage!);
+      
+      // Save user data along with the image URL
+      await firestore.collection('users').doc().set({
+        'name': nameController.text,
+        'email': emailController.text,
+        'phone_number': phonenumberController.text,
+        'password': passwordController.text,
+        'profile_image': imageUrl,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('User data uploaded successfully'),
+      ));
+
+      Navigator.of(context).pushReplacement(
+  MaterialPageRoute(
+    builder: (context) => sidebar(
+      profileImageUrl: imageUrl, // Pass profile image URL
+      username: nameController.text, // Pass username
+      email: emailController.text, // Pass email
+    ),
+  ),
+);
+
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Please select an image'),
+      ));
+    }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Failed to upload user data: $error'),
+    ));
+  }
+}
+
+Future<String> uploadImageToStorage(File imageFile) async {
+  try {
+    // Get reference to Firebase Storage
+    final Reference storageReference = FirebaseStorage.instance.ref().child('profile_images/${DateTime.now().millisecondsSinceEpoch}');
+
+    // Upload image file to Firebase Storage
+    UploadTask uploadTask = storageReference.putFile(imageFile);
+
+    // Get download URL
+    TaskSnapshot snapshot = await uploadTask;
+    String imageUrl = await snapshot.ref.getDownloadURL();
+    
+    return imageUrl;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+  void fetchUserData() async {
+  try {
+    // Assuming the user's data is stored in a document with the user's ID as the document ID
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await firestore.collection('users').doc('userId').get();
+
+    if (snapshot.exists) {
+      // Populate text controllers with user data
+      setState(() {
+        nameController.text = snapshot.data()?['name'] ?? '';
+        emailController.text = snapshot.data()?['email'] ?? '';
+        phonenumberController.text = snapshot.data()?['phone_number'] ?? '';
+        passwordController.text = snapshot.data()?['password'] ?? '';
+        // Password field shouldn't be populated for security reasons
+      });
+    } else {
+      print('Document does not exist');
+    }
+  } catch (error) {
+    print('Error fetching user data: $error');
+  }
+}
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,48 +151,73 @@ class _profilesettingState extends State<profilesetting> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 190,
-              child: Stack(
-                children: [
-                  greenIntroWidgetWithoutLogos(),
-
-                  // ignore: prefer_const_constructors
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: 110,
-                      height: 110,
-                      // ignore: prefer_const_constructors
-                      margin: EdgeInsets.only(bottom: 10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 193, 193, 195),
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/p.jpg'),
-                            fit: BoxFit.cover),
-                      ),
-
-                      // ignore: prefer_const_constructors
-                    ),
+  height: 190,
+  child: Stack(
+    children: [
+      greenIntroWidgetWithoutLogos(),
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: 110,
+          height: 110,
+          margin: EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Color.fromARGB(255, 193, 193, 195),
+          ),
+          child: Stack(
+            children: [
+              // Display uploaded image if available, else display default profile image
+              if (selectedImage != null)
+                ClipOval(
+                  child: Image.file(
+                    selectedImage!,
+                    fit: BoxFit.cover,
+                    width: 110,
+                    height: 110,
                   ),
-                  Positioned(
-                      bottom: 1,
-                      left: 230,
-                      child: CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 4, 13, 20),
-                        radius: 15,
-                        // ignore: sort_child_properties_last
-                        child: Icon(Icons.edit),
-                        foregroundColor: Colors.white,
-                      ))
-                ],
+                )
+              else
+                // Display default profile image if no image is uploaded
+                // Display default profile image if no image is uploaded
+             ClipOval(
+               child: Image.asset(
+               'assets/images/p.jpg',
+              fit: BoxFit.cover,
+              width: 110,
+              height: 110,
+         ),
+       ),
+
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 4, 13, 20),
+                  radius: 15,
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Call a function to handle image uploading
+                      getImage();
+                    },
+                  ),
+                  foregroundColor: Colors.white,
+                ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+),
+
             const SizedBox(
               height: 1,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 23),
+              padding: EdgeInsets.symmetric(horizontal: 23, vertical: 23),
               child: Form(
                 key: formKey,
                 child: Column(
@@ -108,7 +233,7 @@ class _profilesettingState extends State<profilesetting> {
                       return null;
                     }),
                     const SizedBox(
-                      height: 20,
+                      height: 22,
                     ),
                     TextFieldWidget(
                         'Email ID', Icons.email_rounded, emailController,
@@ -119,7 +244,7 @@ class _profilesettingState extends State<profilesetting> {
                       return null;
                     }),
                     const SizedBox(
-                      height: 10,
+                      height: 22,
                     ),
                     TextFieldWidget(
                         'Phone Number', Icons.phone, phonenumberController,
@@ -130,7 +255,7 @@ class _profilesettingState extends State<profilesetting> {
                       return null;
                     }),
                     const SizedBox(
-                      height: 10,
+                      height: 22,
                     ),
                     TextFieldWidget('Password', Icons.lock, passwordController,
                         (String? input) {
@@ -143,10 +268,8 @@ class _profilesettingState extends State<profilesetting> {
                       height: 40,
                     ),
                     blackButton('UPDATE', () {
-                      if (!formKey.currentState!.validate()) {
-                        return;
-                      }
-                    }),
+                      if (formKey.currentState!.validate()) {
+                        uploadUserData();}}),
                   ],
                 ),
               ),
@@ -154,113 +277,7 @@ class _profilesettingState extends State<profilesetting> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(displayWidth * .05),
-        height: displayWidth * .155,
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 74, 200, 234),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.1),
-              blurRadius: 30,
-              offset: Offset(0, 10),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: ListView.builder(
-          itemCount: 2,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: displayWidth * .17),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(() {
-                currentIndex = index;
-                HapticFeedback.lightImpact();
-              });
-            },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  width: index == currentIndex
-                      ? displayWidth * .32
-                      : displayWidth * .40,
-                  alignment: Alignment.center,
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    height: index == currentIndex ? displayWidth * .12 : 0,
-                    width: index == currentIndex ? displayWidth * .32 : 0,
-                    decoration: BoxDecoration(
-                        color: index == currentIndex
-                            ? Color.fromARGB(255, 232, 245, 245).withOpacity(.2)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(50)),
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  width: index == currentIndex
-                      ? displayWidth * .31
-                      : displayWidth * .35,
-                  alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            width:
-                                index == currentIndex ? displayWidth * .13 : 0,
-                          ),
-                          AnimatedOpacity(
-                            opacity: index == currentIndex ? 1 : 0,
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            child: Text(
-                              index == currentIndex
-                                  ? '${listOfStrings[index]}'
-                                  : '',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            width:
-                                index == currentIndex ? displayWidth * .03 : 20,
-                          ),
-                          Icon(
-                            listOfIcons[index],
-                            size: displayWidth * .076,
-                            color: index == currentIndex
-                                ? Colors.black
-                                : Colors.black,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      
     );
   }
 
@@ -293,7 +310,7 @@ TextFieldWidget(String title, IconData iconData,
         width: 350,
         height: 55,
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 200, 200, 200),
+            color: Color.fromARGB(255, 251, 251, 249),
             boxShadow: [
               BoxShadow(
                   color: Colors.black.withOpacity(0.05),
