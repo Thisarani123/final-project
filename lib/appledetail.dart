@@ -20,7 +20,6 @@ class appledetails extends StatelessWidget {
           MaterialPageRoute(builder: (context) => profilesetting()),
         );
       },
-      
       child: Container(
         width: double.infinity,
         child: Container(
@@ -69,7 +68,7 @@ class appledetails extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: '21-24C    ',
+                          text: '21°C-24°C    ',
                           style: SafeGoogleFont(
                             'Inter',
                             fontSize: 32 * ffem,
@@ -106,7 +105,7 @@ class appledetails extends StatelessWidget {
                         fontSize: 20 * ffem,
                         fontWeight: FontWeight.w700,
                         height: 1.2125 * ffem / fem,
-                        color: Color(0xffffffff),
+                        color: Color.fromARGB(255, 217, 228, 59),
                       ),
                       children: [
                         TextSpan(
