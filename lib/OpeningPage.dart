@@ -77,9 +77,6 @@ class _OpeningPageState extends State<OpeningPage> {
         ),
       ),
     );
-    
-
-    // ignore: unused_label, dead_code
+// ignore: unused_label, dead_code
   }
-
 }
