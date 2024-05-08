@@ -20,7 +20,6 @@ class bananadetails extends StatelessWidget {
           MaterialPageRoute(builder: (context) => profilesetting()),
         );
       },
-      
       child: Container(
         width: double.infinity,
         child: Container(
@@ -75,7 +74,7 @@ class bananadetails extends StatelessWidget {
                             fontSize: 32 * ffem,
                             fontWeight: FontWeight.w800,
                             height: 1.2125 * ffem / fem,
-                            color: Color.fromARGB(255, 131, 239, 245),
+                            color: Color.fromARGB(255, 42, 42, 217),
                           ),
                         ),
                         TextSpan(
@@ -106,7 +105,7 @@ class bananadetails extends StatelessWidget {
                         fontSize: 20 * ffem,
                         fontWeight: FontWeight.w700,
                         height: 1.2125 * ffem / fem,
-                        color: Color.fromARGB(255, 250, 251, 252),
+                        color: Color.fromARGB(255, 221, 234, 111),
                       ),
                       children: [
                         TextSpan(
