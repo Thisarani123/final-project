@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1081588275546",
+    "project_id": "plant-detection-f8434",
+    "storage_bucket": "plant-detection-f8434.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081588275546:android:f882110d53d5827f437b63",
+        "android_client_info": {
+          "package_name": "com.example.detectnew"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGf24z8v0cmmn9AzSxCmPRFk9Xyq4gv3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
