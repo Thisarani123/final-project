@@ -1,4 +1,3 @@
-import 'package:detectnew/WeatherPage.dart';
 import 'package:detectnew/chat.dart';
 import 'package:detectnew/profile_setting.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,6 @@ class _sidebarState extends State<sidebar> {
     HomeScreen(), // Use the detect page widget here
     Chat(),
     friutinfo(),
-    WeatherPage(),
     profilesetting(),
   ];
 
@@ -181,7 +179,6 @@ class Defaults {
     'Detection',
     'Chatbot',
     'Fruit Info',
-    'Weather',
     'Profile',
   ];
 
@@ -190,7 +187,6 @@ class Defaults {
     Icons.search,
     Icons.chat,
     Icons.local_florist_outlined,
-    Icons.sunny,
     Icons.person,
   ];
 }

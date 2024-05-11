@@ -2,7 +2,6 @@
 import 'dart:io';
 
 import 'package:detectnew/bananadetail.dart';
-import 'package:detectnew/WeatherPage.dart';
 import 'package:detectnew/detect.dart';
 import 'package:detectnew/grapesdetail.dart';
 import 'package:detectnew/login_screen.dart';
