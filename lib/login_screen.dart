@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               SizedBox(
-                height: 80,
+                height: 100,
               ),
               const Spacer(),
 
@@ -63,18 +63,18 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
-                  vertical: 15,
+                  vertical: 50,
                 ),
                 child: Glassmorphism(
                   blur: 1,
                   opacity: 0.5,
                   radius: 20,
                   child: Container(
-                    height: 290,
+                    height: 400,
                     width: 400,
                     alignment: Alignment.topCenter,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 30),
+                        horizontal: 20, vertical: 40),
                     child: Column(children: [
                       Align(
                         alignment: Alignment.topLeft,
@@ -82,20 +82,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           'USERNAME:',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 13.5,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
 
                       reusableTextField("Enter Username", Icons.person, false,
-                          _usernameTextController, height: 45),
+                          _usernameTextController),
 
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       Align(
                         alignment: Alignment.topLeft,
@@ -103,25 +103,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           'PASSWORD:',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 13.5,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
 
                       reusableTextField(
                         "Enter Password",
                         Icons.lock,
                         true,
-                        _passwordTextController, height: 45,
+                        _passwordTextController,
                       ),
 
                       // ignore: prefer_const_constructors
                       SizedBox(
-                        height: 1,
+                        height: 15,
                       ),
 
                       signInSignUpButton(context, true, () {
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       }),
                       SizedBox(
-                        height: 1,
+                        height: 5,
                       ),
                       signUpOption(),
                     ]),
@@ -178,28 +178,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-  Widget reusableTextField(String hintText, IconData icon, bool obscureText,
-    TextEditingController controller,
-    {required double height}) {
-  return Container(
-    height: height ?? 50, // Default width is 250
-    child: TextField(
-      controller: controller,
-      obscureText: obscureText,
-      style: TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: const Color.fromARGB(255, 10, 10, 10)),
-        prefixIcon: Icon(icon, color: Colors.black),
-        filled: true,
-        fillColor: Color.fromARGB(255, 82, 147, 90).withOpacity(0.5),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    ),
-  );
-}
-
 }
