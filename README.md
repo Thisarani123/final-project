@@ -65,13 +65,6 @@ Technologies used in the project:
 - Dialogflow
 
 
-## Screenshots
-
-![App Screenshot](https://i.ibb.co/KV8MRkm/Screenshot-2024-05-10-181708.png)
-
-![App Screenshot](https://i.ibb.co/K5h8hTM/Screenshot-2024-05-11-010214.png)
-
-
 ## Using the Application 
 
 Disease Detection:🔎🕵️
