@@ -1,4 +1,3 @@
-import 'package:detectnew/WeatherPage.dart';
 import 'package:detectnew/appledetail.dart';
 import 'package:detectnew/bananadetail.dart';
 import 'package:detectnew/grapesdetail.dart';
@@ -23,7 +22,7 @@ class friutinfo extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WeatherPage()),
+            MaterialPageRoute(builder: (context) => profilesetting()),
           );
         },
         child: SingleChildScrollView(
