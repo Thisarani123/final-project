@@ -10,7 +10,7 @@ import base64
 
 app = Flask(__name__)
 
-loaded_model = load_model('bananaLSD.h5')
+loaded_model = load_model('model/bananaLSD.h5')
 
 @app.route('/api', methods=['POST'])
 #@app.route('/')
